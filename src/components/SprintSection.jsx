@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Task from "./TaskItem";
 import { ChevronDown } from "lucide-react";
 
@@ -10,6 +10,19 @@ const SprintSection = ({ sprintData }) => {
     assignee: "",
     category: "",
   });
+
+  useEffect(() => {
+    // Prevent scrolling when modal is open
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"; // Reset scroll when modal closes
+    };
+  }, [isModalOpen]);
 
   if (!sprintData || !sprintData.tasks) {
     return <div className="text-gray-500 p-4">No tasks available</div>;
@@ -32,7 +45,7 @@ const SprintSection = ({ sprintData }) => {
   };
 
   return (
-    <div className="bg-gray-50 p-4 rounded-lg shadow-md border">
+    <div className="max-w-3xl mx-auto bg-gray-50 p-4 rounded-lg shadow-md border">
       {/* Sprint Header */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
@@ -43,9 +56,9 @@ const SprintSection = ({ sprintData }) => {
       </div>
 
       {/* Task List */}
-      <div className="space-y-2">
+      <div className="w-full space-y-2">
         {sprintData.tasks.length > 0 ? (
-          sprintData.tasks.map((task, index) => <Task key={index} taskData={task} />)
+          sprintData.tasks.map((task) => <Task key={task.id} taskData={task} />)
         ) : (
           <p className="text-gray-400 text-sm">No tasks available</p>
         )}
@@ -56,9 +69,15 @@ const SprintSection = ({ sprintData }) => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-md w-96">
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          {/* Background Overlay */}
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
+          {/* Modal Box */}
+          <div className="relative bg-white p-6 rounded-lg shadow-lg w-80 z-50">
             <h3 className="text-lg font-semibold mb-4">Add New Task</h3>
+
+            {/* Task Name */}
             <input
               type="text"
               name="name"
@@ -67,22 +86,33 @@ const SprintSection = ({ sprintData }) => {
               onChange={handleInputChange}
               className="w-full p-2 border rounded mb-2"
             />
-            <input
-              type="text"
+
+            {/* Status Dropdown */}
+            <select
               name="status"
-              placeholder="Status"
               value={newTask.status}
               onChange={handleInputChange}
               className="w-full p-2 border rounded mb-2"
-            />
-            <input
-              type="text"
+            >
+              <option value="To Do">To Do</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+
+            {/* Assignee Dropdown */}
+            <select
               name="assignee"
-              placeholder="Assignee"
               value={newTask.assignee}
               onChange={handleInputChange}
               className="w-full p-2 border rounded mb-2"
-            />
+            >
+              <option value="">Select Assignee</option>
+              <option value="John Doe">John Doe</option>
+              <option value="Jane Smith">Jane Smith</option>
+              <option value="Maya Johnson">Maya Johnson</option>
+            </select>
+
+            {/* Category Input */}
             <input
               type="text"
               name="category"
@@ -91,6 +121,8 @@ const SprintSection = ({ sprintData }) => {
               onChange={handleInputChange}
               className="w-full p-2 border rounded mb-4"
             />
+
+            {/* Modal Buttons */}
             <div className="flex justify-end space-x-2">
               <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 rounded">Cancel</button>
               <button onClick={handleSubmit} className="px-4 py-2 bg-blue-500 text-white rounded">Add</button>

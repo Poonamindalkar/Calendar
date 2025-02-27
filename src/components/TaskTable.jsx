@@ -1,17 +1,16 @@
 import React from "react";
 import TableHeader from "./TableHeader";
-import tasks from "../data/tasks"; // ✅ Ensure correct import path
+import tasks from "../data/tasks";
 
 const TaskTable = () => {
   return (
-    <div className="p-4 bg-white shadow-md rounded-md">
-      <TableHeader /> {/* ✅ Keeps column structure consistent */}
-      
+    <div className="max-w-3xl mx-auto p-4 bg-white shadow-md rounded-md">
+      <TableHeader />
+
       {tasks.map((section) => (
         <div key={section.title} className="mt-6">
           <h2 className="text-lg font-semibold text-gray-800 mb-2">{section.title}</h2>
-          
-          {/* Task Rows */}
+
           <div className="divide-y divide-gray-200">
             {section.tasks.map((task) => (
               <div 

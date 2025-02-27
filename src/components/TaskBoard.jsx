@@ -3,43 +3,43 @@ import SprintSection from "./SprintSection";
 import TableHeader from "./TableHeader";
 import tasks from "../data/tasks";
 import { SearchBox, Dropdown } from "@fluentui/react";
- 
+
 const TaskBoard = () => {
   const [groupBy, setGroupBy] = useState("Sprint");
-  const groupingOptions = ["Sprint",  "Status", "Assignee", "Category"];
+  const groupingOptions = ["Sprint", "Status", "Assignee", "Category"];
 
   const handleGroupBySelection = (_, option) => {
     setGroupBy(option.key);
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-white rounded-xl shadow-md">
-      <h1 className="text-2xl font-semibold mb-4">List View Board</h1>
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-xl">  
+      <h1 className="text-2xl font-semibold mb-4 text-center">List View Board</h1>
 
-      {/* Search & Group By Dropdown */}
-      <div className="flex justify-between items-center mb-4 relative">
-        {/* Fluent UI SearchBox */}
-        <SearchBox 
-          placeholder="Search..." 
+      {/* Search & Group By */}
+      <div className="flex justify-between items-center mb-4">
+        <SearchBox
+          placeholder="Search..."
           onSearch={(value) => console.log("Searching for:", value)}
-          styles={{ root: { width: 300 } }} 
+          styles={{ root: { width: 250 } }} 
         />
 
-        {/* Fluent UI Dropdown for Grouping */}
         <Dropdown
           placeholder={`Group by: ${groupBy}`}
           options={groupingOptions.map((option) => ({ key: option, text: option }))}
           selectedKey={groupBy}
           onChange={handleGroupBySelection}
-          styles={{ dropdown: { width: 180 } }}
+          styles={{ dropdown: { width: 160 } }}
         />
       </div>
 
       {/* Table Header */}
-      <TableHeader />
+      <div className="w-full">
+        <TableHeader />
+      </div>
 
       {/* Sprint Sections */}
-      <div className="space-y-6 mt-2">
+      <div className="w-full mt-2 space-y-4">
         {tasks.map((sprint) => (
           <SprintSection key={sprint.title} sprintData={sprint} />
         ))}
