@@ -3,6 +3,7 @@ import Task from "./TaskItem";
 import { ChevronDown } from "lucide-react";
 
 const SprintSection = ({ sprintData }) => {
+  const [tasks, setTasks] = useState([...sprintData.tasks]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newTask, setNewTask] = useState({
     name: "",
@@ -12,21 +13,8 @@ const SprintSection = ({ sprintData }) => {
   });
 
   useEffect(() => {
-    // Prevent scrolling when modal is open
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto"; // Reset scroll when modal closes
-    };
-  }, [isModalOpen]);
-
-  if (!sprintData || !sprintData.tasks) {
-    return <div className="text-gray-500 p-4">No tasks available</div>;
-  }
+    setTasks([...sprintData.tasks]); // Ensure tasks update when sprintData changes
+  }, [sprintData]);
 
   const handleCreateClick = () => {
     setIsModalOpen(true);
@@ -36,12 +24,19 @@ const SprintSection = ({ sprintData }) => {
     setNewTask({ ...newTask, [e.target.name]: e.target.value });
   };
 
+  // ✅ FIXED: Add new task to the local state instead of sprintData.tasks
   const handleSubmit = () => {
     if (newTask.name.trim()) {
-      sprintData.tasks.push({ id: Date.now(), ...newTask, completed: false });
+      const newTaskData = { id: Date.now(), ...newTask, completed: false };
+      setTasks((prevTasks) => [...prevTasks, newTaskData]); // Update tasks state
       setIsModalOpen(false);
       setNewTask({ name: "", status: "To Do", assignee: "", category: "" });
     }
+  };
+
+  // ✅ Delete Task Function (Already Fixed)
+  const handleDelete = (taskId) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   };
 
   return (
@@ -51,21 +46,25 @@ const SprintSection = ({ sprintData }) => {
         <div className="flex items-center gap-2">
           <ChevronDown className="w-5 h-5 text-gray-600" />
           <h2 className="font-semibold text-lg">{sprintData.title}</h2>
-          <div>{sprintData.tasks.length} Tasks</div>
+          <div>{tasks.length} Tasks</div>
         </div>
       </div>
 
       {/* Task List */}
       <div className="w-full space-y-2">
-        {sprintData.tasks.length > 0 ? (
-          sprintData.tasks.map((task) => <Task key={task.id} taskData={task} />)
+        {tasks.length > 0 ? (
+          tasks.map((task) => (
+            <Task key={task.id} taskData={task} onDelete={handleDelete} />
+          ))
         ) : (
           <p className="text-gray-400 text-sm">No tasks available</p>
         )}
       </div>
 
       {/* Add Task Button */}
-      <button onClick={handleCreateClick} className="text-blue-500 text-sm mt-2">+ Create</button>
+      <button onClick={handleCreateClick} className="text-blue-500 text-sm mt-2">
+        + Create
+      </button>
 
       {/* Modal */}
       {isModalOpen && (
@@ -124,8 +123,12 @@ const SprintSection = ({ sprintData }) => {
 
             {/* Modal Buttons */}
             <div className="flex justify-end space-x-2">
-              <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-              <button onClick={handleSubmit} className="px-4 py-2 bg-blue-500 text-white rounded">Add</button>
+              <button onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 rounded">
+                Cancel
+              </button>
+              <button onClick={handleSubmit} className="px-4 py-2 bg-blue-500 text-white rounded">
+                Add
+              </button>
             </div>
           </div>
         </div>
