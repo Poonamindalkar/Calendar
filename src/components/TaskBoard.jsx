@@ -1,56 +1,38 @@
 import { useState } from "react";
 import SprintSection from "./SprintSection";
 import TableHeader from "./TableHeader";
-import tasks from "../data/tasks"; // ✅ Ensure correct path
-import { Search } from "lucide-react";
-
+import tasks from "../data/tasks";
+import { SearchBox, Dropdown } from "@fluentui/react";
+ 
 const TaskBoard = () => {
   const [groupBy, setGroupBy] = useState("Sprint");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const groupingOptions = ["Sprint", "Priority", "Status", "Assignee", "Category"];
+  const groupingOptions = ["Sprint",  "Status", "Assignee", "Category"];
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-  const handleGroupBySelection = (option) => {
-    setGroupBy(option);
-    setDropdownOpen(false);
+  const handleGroupBySelection = (_, option) => {
+    setGroupBy(option.key);
   };
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-white rounded-xl shadow-md">
       <h1 className="text-2xl font-semibold mb-4">List View Board</h1>
 
-      {/* Search & Dropdown */}
+      {/* Search & Group By Dropdown */}
       <div className="flex justify-between items-center mb-4 relative">
-        <div className="relative w-96">
-          <Search className="absolute left-3 top-2.5 text-gray-400" />
-          <input 
-            type="text" 
-            placeholder="Search" 
-            className="w-full pl-10 p-2 border rounded-lg bg-gray-100 focus:ring focus:ring-blue-300" 
-          />
-        </div>
+        {/* Fluent UI SearchBox */}
+        <SearchBox 
+          placeholder="Search..." 
+          onSearch={(value) => console.log("Searching for:", value)}
+          styles={{ root: { width: 300 } }} 
+        />
 
-        <div className="relative">
-          <button 
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition" 
-            onClick={toggleDropdown}
-          >
-            Group by: {groupBy}
-          </button>
-          {dropdownOpen && (
-            <ul className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-md">
-              {groupingOptions.map((option) => (
-                <li 
-                  key={option} 
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => handleGroupBySelection(option)}
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        {/* Fluent UI Dropdown for Grouping */}
+        <Dropdown
+          placeholder={`Group by: ${groupBy}`}
+          options={groupingOptions.map((option) => ({ key: option, text: option }))}
+          selectedKey={groupBy}
+          onChange={handleGroupBySelection}
+          styles={{ dropdown: { width: 180 } }}
+        />
       </div>
 
       {/* Table Header */}
