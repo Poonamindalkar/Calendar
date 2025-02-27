@@ -1,12 +1,19 @@
 import { useState } from "react";
-import { CheckCircle, Square as SquareIcon } from "lucide-react";
+import { CheckCircle, Square as SquareIcon, Pencil } from "lucide-react";
 
 const Task = ({ taskData, onToggleComplete }) => {
   const [isCompleted, setIsCompleted] = useState(taskData.completed);
+  const [isEditing, setIsEditing] = useState(false);
+  const [status, setStatus] = useState(taskData.status);
 
   const toggleCompletion = () => {
     setIsCompleted(!isCompleted);
-    onToggleComplete(taskData.id); // Update parent state
+    onToggleComplete(taskData.id);
+  };
+
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value);
+    setIsEditing(false); // Close dropdown after selection
   };
 
   return (
@@ -25,15 +32,30 @@ const Task = ({ taskData, onToggleComplete }) => {
         </span>
       </div>
 
-      {/* Status Badge */}
-      <div className="flex justify-center">
-        <span className={`px-3 py-1 text-xs font-medium rounded ${
-          taskData.status === "Completed" ? "bg-green-200 text-green-700" :
-          taskData.status === "In Progress" ? "bg-blue-200 text-blue-700" :
-          "bg-gray-200 text-gray-700"
-        }`}>
-          {taskData.status}
-        </span>
+      {/* Status Dropdown */}
+      <div className="flex items-center gap-2 justify-center relative">
+        {isEditing ? (
+          <select
+            value={status}
+            onChange={handleStatusChange}
+            className="p-1 border rounded text-xs absolute top-0 left-0 z-10 bg-white shadow-md"
+          >
+            <option value="To Do">To Do</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        ) : (
+          <span className={`px-3 py-1 text-xs font-medium rounded ${
+            status === "Completed" ? "bg-green-200 text-green-700" :
+            status === "In Progress" ? "bg-blue-200 text-blue-700" :
+            "bg-gray-200 text-gray-700"
+          }`}>
+            {status}
+          </span>
+        )}
+        <button onClick={() => setIsEditing(true)}>
+          <Pencil className="w-4 h-4 text-gray-500" />
+        </button>
       </div>
 
       {/* Assignee */}

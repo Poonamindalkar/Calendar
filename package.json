@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fluentui/react": "^8.122.11",
+    "@fluentui/react-components": "^9.60.0",
     "@tailwindcss/vite": "^4.0.9",
     "lucide-react": "^0.476.0",
     "react": "^19.0.0",
