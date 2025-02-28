@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SprintSection from "./SprintSection";
 import TableHeader from "./TableHeader";
+import { Badge } from "./Avatar";
 import tasks from "../data/tasks";
 import { SearchBox } from "@fluentui/react";
 
@@ -68,7 +69,10 @@ const TaskBoard = () => {
           styles={{ root: { width: 300 } }}
           onChange={(e, newValue) => handleSearch(newValue)}
           value={searchQuery}
+          
         />
+        <Badge />
+
 
         {/* Custom Dropdown */}
         <div
