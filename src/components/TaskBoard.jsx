@@ -12,7 +12,7 @@ const TaskBoard = () => {
   const [currentFilter, setCurrentFilter] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // 🔹 Function to Filter Tasks by Dropdown
+  //  Function to Filter Tasks by Dropdown
   const filterTasks = (type, value) => {
     if (!value) {
       setFilteredTasks(tasks);
@@ -27,15 +27,14 @@ const TaskBoard = () => {
 
     setFilteredTasks(newTasks);
     setCurrentFilter(`${type.charAt(0).toUpperCase() + type.slice(1)}: ${value}`);
-
   };
 
-  // 🔹 Function to Filter Tasks by Search Query
+  //  Function to Filter Tasks by Search Query
   const handleSearch = (query) => {
     setSearchQuery(query);
 
     if (!query.trim()) {
-      setFilteredTasks(tasks); // Show all tasks if search is empty
+      setFilteredTasks(tasks); 
       return;
     }
 
@@ -135,19 +134,13 @@ const TaskBoard = () => {
       {/* Show Current Filter */}
       {currentFilter && (
         <div className="flex items-center justify-between bg-blue-100 text-blue-700 px-4 py-2 rounded-md mb-4">
-          <span className="font-medium">Showing: ${currentFilter}</span>
-    
-
-<button
-  onClick={() => filterTasks(null, null)}
-  className="text-sm text-blue-500 hover:underline"
->
-  Clear Filter
-</button>
-
-
-
-
+          <span className="font-medium">{`Showing: ${currentFilter}`}</span>
+          <button
+            onClick={() => filterTasks(null, null)}
+            className="text-sm text-blue-500 hover:underline"
+          >
+            Clear Filter
+          </button>
         </div>
       )}
 
