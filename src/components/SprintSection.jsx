@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import Task from "./TaskItem";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 
 const SprintSection = ({ sprintData }) => {
   const [tasks, setTasks] = useState([...sprintData.tasks]);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newTask, setNewTask] = useState({
     name: "",
@@ -13,18 +14,20 @@ const SprintSection = ({ sprintData }) => {
   });
 
   useEffect(() => {
-    setTasks([...sprintData.tasks]); // Ensure tasks update when sprintData changes
+    setTasks([...sprintData.tasks]); 
   }, [sprintData]);
 
+  //  Handle Create Task Click
   const handleCreateClick = () => {
     setIsModalOpen(true);
   };
 
+  //  Handle Input Change
   const handleInputChange = (e) => {
     setNewTask({ ...newTask, [e.target.name]: e.target.value });
   };
 
-  // ✅ FIXED: Add new task to the local state instead of sprintData.tasks
+  //  Add New Task
   const handleSubmit = () => {
     if (newTask.name.trim()) {
       const newTaskData = { id: Date.now(), ...newTask, completed: false };
@@ -34,7 +37,7 @@ const SprintSection = ({ sprintData }) => {
     }
   };
 
-  // ✅ Delete Task Function (Already Fixed)
+  //  Delete Task
   const handleDelete = (taskId) => {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   };
@@ -42,31 +45,41 @@ const SprintSection = ({ sprintData }) => {
   return (
     <div className="max-w-3xl mx-auto bg-gray-50 p-4 rounded-lg shadow-md border">
       {/* Sprint Header */}
-      <div className="flex items-center justify-between mb-2">
+      <div
+        className="flex items-center justify-between mb-2 cursor-pointer"
+        onClick={() => setIsExpanded((prev) => !prev)}
+      >
         <div className="flex items-center gap-2">
-          <ChevronDown className="w-5 h-5 text-gray-600" />
+          {/* Expand/Collapse Icon */}
+          {isExpanded ? (
+            <ChevronDown className="w-5 h-5 text-gray-600" />
+          ) : (
+            <ChevronRight className="w-5 h-5 text-gray-600" />
+          )}
           <h2 className="font-semibold text-lg">{sprintData.title}</h2>
           <div>{tasks.length} Tasks</div>
         </div>
       </div>
 
-      {/* Task List */}
-      <div className="w-full space-y-2">
-        {tasks.length > 0 ? (
-          tasks.map((task) => (
-            <Task key={task.id} taskData={task} onDelete={handleDelete} />
-          ))
-        ) : (
-          <p className="text-gray-400 text-sm">No tasks available</p>
-        )}
-      </div>
+      {/* Task List - Show Only if Expanded */}
+      {isExpanded && (
+        <div className="w-full space-y-2 transition-all duration-300">
+          {tasks.length > 0 ? (
+            tasks.map((task) => (
+              <Task key={task.id} taskData={task} onDelete={handleDelete} />
+            ))
+          ) : (
+            <p className="text-gray-400 text-sm">No tasks available</p>
+          )}
 
-      {/* Add Task Button */}
-      <button onClick={handleCreateClick} className="text-blue-500 text-sm mt-2">
-        + Create
-      </button>
+          {/* Add Task Button */}
+          <button onClick={handleCreateClick} className="text-blue-500 text-sm mt-2">
+            + Create
+          </button>
+        </div>
+      )}
 
-      {/* Modal */}
+      {/* Modal - Add New Task */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           {/* Background Overlay */}
