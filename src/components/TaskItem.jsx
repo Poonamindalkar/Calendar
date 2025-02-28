@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { CheckCircle, Square as SquareIcon, Pencil } from "lucide-react";
+import { IconButton } from "@fluentui/react/lib/Button"; // Fluent UI
 
-const Task = ({ taskData, onToggleComplete }) => {
+const Task = ({ taskData, onToggleComplete, onDelete }) => {
   const [isCompleted, setIsCompleted] = useState(taskData.completed);
   const [isEditing, setIsEditing] = useState(false);
   const [status, setStatus] = useState(taskData.status);
 
   const toggleCompletion = () => {
     setIsCompleted(!isCompleted);
-    onToggleComplete(taskData.id);
+    onToggleComplete?.(taskData.id);
   };
 
   const handleStatusChange = (e) => {
@@ -17,7 +18,7 @@ const Task = ({ taskData, onToggleComplete }) => {
   };
 
   return (
-    <div className="grid grid-cols-[2fr_1fr_1fr_1fr] items-center px-4 py-3 bg-white rounded-lg shadow border">
+    <div className="grid grid-cols-[2fr_1fr_1fr_1fr_auto] items-center px-4 py-3 bg-white rounded-lg shadow border">
       {/* Task Name with Checkbox */}
       <div className="flex items-center gap-3">
         <button onClick={toggleCompletion} className="focus:outline-none">
@@ -71,6 +72,17 @@ const Task = ({ taskData, onToggleComplete }) => {
         }`}>
           {taskData.category}
         </span>
+      </div>
+
+      {/* Delete Task Icon */}
+      <div className="flex justify-center">
+        <IconButton
+          iconProps={{ iconName: "Delete" }} // Fluent UI Delete icon
+          title="Delete Task"
+          ariaLabel="Delete Task"
+          onClick={() => onDelete(taskData.id)}
+          styles={{ root: { color: "red" } }} // Red color for delete icon
+        />
       </div>
     </div>
   );
