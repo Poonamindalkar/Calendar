@@ -67,8 +67,14 @@ const Task = ({ taskData, onToggleComplete, onDelete }) => {
       {/* Category Tag */}
       <div className="flex justify-center">
         <span className={`px-3 py-1 text-xs font-medium rounded ${
-          taskData.category === "Research" ? "bg-pink-200 text-pink-700" :
-          "bg-yellow-200 text-yellow-700"
+          taskData.category === "Research" ? "bg-pink-200 text-pink-700" : 
+          taskData.category === "Vision" ? "bg-green-200 text-pink-700" :
+          taskData.category === "Marketing" ? "bg-blue-200 text-pink-700" :
+          taskData.category === "Mobile" ? "bg-yellow-200 text-pink-700" :""
+         
+           
+        
+          
         }`}>
           {taskData.category}
         </span>
