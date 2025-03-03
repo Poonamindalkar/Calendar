@@ -112,17 +112,15 @@ const SprintSection = ({ sprintData }) => {
             </select>
 
             {/* Assignee Dropdown */}
-            <select
+            <input
               name="assignee"
+              placeholder="Add Assignee"
               value={newTask.assignee}
               onChange={handleInputChange}
               className="w-full p-2 border rounded mb-2"
-            >
-              <option value="">Select Assignee</option>
-              <option value="John Doe">John Doe</option>
-              <option value="Jane Smith">Jane Smith</option>
-              <option value="Maya Johnson">Maya Johnson</option>
-            </select>
+            />
+               
+            
 
             {/* Category Input */}
             <input
