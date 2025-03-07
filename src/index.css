@@ -1,4 +1,231 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@import "tailwindcss";
+/* Header Section */
+.header-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border-radius: 8px; /* Slightly more rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+}
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 500px;
+}
+
+.search-container input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd; /* Lighter border */
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+}
+
+.search-container input:focus {
+  outline: none;
+  border-color: #007bff; /* Highlight border on focus */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Focus ring */
+}
+
+.search-container button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.search-container button:hover {
+  background-color: #0056b3;
+}
+
+/* Add User Button */
+.add-user {
+  margin-left: 20px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.add-user:hover {
+  background-color: #218838;
+}
+
+/* Group By Section */
+.grouping {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+  align-items: center; /* Align items vertically */
+}
+
+.grouping div {
+  cursor: pointer;
+  color: #007bff;
+  padding: 5px 10px; /* Add padding for better touch target */
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.grouping div:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Light background on hover */
+  text-decoration: none; /* Remove underline */
+}
+
+/* List View Board Specific Styles */
+.list-view-board {
+  background-color: #f8f9fa; /* Light background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.list-view-board h2 {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.task-group {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  overflow: hidden; /* Ensure rounded corners are visible */
+}
+
+.task-group-header {
+  background-color: #e9ecef; /* Light grey header */
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.task-group-header h3 {
+  font-size: 1em;
+  margin: 0;
+  color: #333;
+}
+
+.task-group-header span {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.task-item {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.task-item span {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.task-item .status {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  color: white;
+}
+
+.task-item .status.completed {
+  background-color: #28a745;
+}
+
+.task-item .status.in-progress {
+  background-color: #007bff;
+}
+
+.task-item .status.to-do {
+  background-color: #6c757d;
+}
+
+.task-item .assignee {
+  font-size: 0.9em;
+  color: #333;
+  margin-right: 10px;
+}
+
+.task-item .category {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  color: white;
+}
+
+.task-item .category.research {
+  background-color: #dc3545;
+}
+
+.task-item .category.marketing {
+  background-color: #ffc107;
+  color: black;
+}
+
+.task-item .category.mobile {
+  background-color: #17a2b8;
+}
+
+.task-item .category.vision {
+  background-color: #28a745;
+}
+
+.task-item .edit-icon, .task-item .delete-icon {
+  margin-left: 5px;
+  cursor: pointer;
+  color: #666;
+}
+
+.task-item .edit-icon:hover, .task-item .delete-icon:hover {
+  color: #333;
+}
+
+.add-task {
+  padding: 10px 15px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #ddd;
+  text-align: left;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.add-task:hover {
+  background-color: #e9ecef;
+}
+
+/* General Page Styling (previously in app.css) */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: left;
+}
+
+.container, .search-container, .grouping {
+  text-align: left;
+}

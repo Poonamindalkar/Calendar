@@ -1,13 +1,76 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + React</title>
+  <link rel="stylesheet" href="index.css"> 
+</head>
+<body>
+  <div id="root">
+    <div class="container"> 
+
+      <div class="header-section">
+        <div class="search-container">
+          <input type="text" placeholder="Search" />
+          <button>Search</button>
+        </div>
+        <button class="add-user">Add User</button>
+      </div>
+
+      <div class="grouping">
+        <div>Group by Status</div>
+        <div>Group by Priority</div>
+      </div>
+
+      <div class="list-view-board">
+        <h2>Mobile App</h2>
+
+        <div class="task-group">
+          <div class="task-group-header">
+            <h3>To Do</h3>
+            <span>2 tasks</span>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" />
+            <span>Brainstorming the new design concept</span>
+            <span class="status to-do">To Do</span>
+            <span class="assignee">David</span>
+            <span class="category mobile">Mobile</span>
+            <i class="edit-icon"></i>
+            <i class="delete-icon"></i>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" />
+            <span>Creating a new landing page for the app</span>
+            <span class="status in-progress">In Progress</span>
+            <span class="assignee">Emily</span>
+            <span class="category mobile">Mobile</span>
+            <i class="edit-icon"></i>
+            <i class="delete-icon"></i>
+          </div>
+        </div>
+
+        <div class="task-group">
+          <div class="task-group-header">
+            <h3>In Progress</h3>
+            <span>1 task</span>
+          </div>
+          <div class="task-item">
+            <input type="checkbox" />
+            <span>Conducting user research for the app</span>
+            <span class="status in-progress">In Progress</span>
+            <span class="assignee">Oliver</span>
+            <span class="category research">Research</span>
+            <i class="edit-icon"></i>
+            <i class="delete-icon"></i>
+          </div>
+        </div>
+
+        </div> 
+    </div>
+  </div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
 </html>
