@@ -6,11 +6,15 @@ initializeIcons();
 
 function App() {
   return (
-    <div className="bg-white-50 min-h-screen flex items-center justify-center">
+    <>
+    
+    <div className="container">
       
       <TaskBoard />
     </div>
-    
+
+   
+    </>
   );
 }
 
